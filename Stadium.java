@@ -1,19 +1,22 @@
 import java.util.*;
 
 public class Stadium {
-    private Set<Sits> sitsAvailable;
+    private Set<Sits> seatsAvailable;
     private Map<Client, Sits> reservation;
     private Queue<Client> waitList;
+    //Added
+    //private LinkedList<> registerOfTransaction;
+    //private Stack<> cancellations; 
 
     public Stadium (){
-        sitsAvailable = new HashSet<>();
+        seatsAvailable = new HashSet<>();
         reservation = new HashMap<>();
         waitList = new LinkedList();
     }
 
     public void reserveSit(Client client, Sits sits){
-        if(sitsAvailable.contains(sits)){
-            sitsAvailable.remove(sits);
+        if(seatsAvailable.contains(sits)){
+            seatsAvailable.remove(sits);
             reservation.put(client, sits);
             System.out.println("Reserve complited succesfully.");
         }
@@ -25,7 +28,7 @@ public class Stadium {
     public void cancelReservation(Client client){
         Sits sit = reservation.remove(client);
         if(sit != null){
-            sitsAvailable.add(sit);
+            seatsAvailable.add(sit);
 
         
             if(!waitList.isEmpty()){
@@ -42,7 +45,14 @@ public class Stadium {
 
     }
     public void Disponibility(){
-        System.out.println("Available sits: " + sitsAvailable.size());
+        System.out.println("Available sits: " + seatsAvailable.size());
     }
+
+    
+
+    // Create Levels
+    // Create different prices for each level
+    // Create different capacities
+
 
 }

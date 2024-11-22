@@ -1,13 +1,13 @@
 public class Sits {
     private String section;
     private int row;
-    private int sitNum;
+    private int seatNum;
 
     //Constructor
-    public Sits (String section , int row, int sitNum){
+    public Sits (String section , int row, int seatNum){
         this.section = section;
         this.row = row;
-        this.sitNum = sitNum;
+        this.seatNum = seatNum;
     }
 
     //Getters
@@ -17,7 +17,7 @@ public class Sits {
     public int getRow(){
         return this.row;
     }
-    public int getSitNum(){
+    public int getSeatNum(){
         return this.row;
     }
 
@@ -28,8 +28,8 @@ public class Sits {
     public void setRow(int row){
         this.row = row;
     }
-    public void setSitNum(int sitNum){
-        this.sitNum = sitNum;
+    public void setSeatNum(int sitNum){
+        this.seatNum = seatNum;
     }
 
 }
