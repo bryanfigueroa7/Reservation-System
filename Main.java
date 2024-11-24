@@ -1,4 +1,3 @@
-
 import java.util.*;
 
 public class Main {
@@ -16,18 +15,12 @@ public class Main {
         String phonenum = scanner.nextLine();
 
         // Level
-
         System.out.println("What level would you like to purchase? ");
         System.out.println("1. Field Level");
         System.out.println("2. Main Level");
         System.out.println("3. Grandstand Level");
         System.out.print("Enter the number corresponding to your choice: ");
         int levelChoice = scanner.nextInt();
-
-        //Amount of Tickets
-
-        System.out.print("How many tickets from level " + levelChoice + " would you like? ");
-        int amount = scanner.nextInt();
 
         // Determining level
         String level = "";
@@ -44,8 +37,11 @@ public class Main {
             default:
                 System.out.println("Invalid choice. Defaulting to 'Field Level'.");
                 level = "Field Level";
+        }
 
-        
+        // Amount of Tickets
+        System.out.print("How many tickets from level " + levelChoice + " would you like? ");
+        int amount = scanner.nextInt();
 
         // Tester
         System.out.println("Name: " + name);
@@ -54,8 +50,5 @@ public class Main {
         System.out.println("Amount of tickets from " + level + " is: " + amount);
 
         scanner.close();
-
-    }
-
     }
 }

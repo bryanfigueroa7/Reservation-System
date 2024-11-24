@@ -1,10 +1,10 @@
-public class Sits {
+public class Seats {
     private String section;
     private int row;
     private int seatNum;
 
     //Constructor
-    public Sits (String section , int row, int seatNum){
+    public Seats (String section , int row, int seatNum){
         this.section = section;
         this.row = row;
         this.seatNum = seatNum;

@@ -1,8 +1,8 @@
 import java.util.*;
 
 public class Stadium {
-    private Set<Sits> seatsAvailable;
-    private Map<Client, Sits> reservation;
+    private Set<Seats> seatsAvailable;
+    private Map<Client, Seats> reservation;
     private Queue<Client> waitList;
     //Added
     //private LinkedList<> registerOfTransaction;
@@ -14,7 +14,7 @@ public class Stadium {
         waitList = new LinkedList();
     }
 
-    public void reserveSit(Client client, Sits sits){
+    public void reserveSit(Client client, Seats sits){
         if(seatsAvailable.contains(sits)){
             seatsAvailable.remove(sits);
             reservation.put(client, sits);
@@ -26,7 +26,7 @@ public class Stadium {
 
     }
     public void cancelReservation(Client client){
-        Sits sit = reservation.remove(client);
+        Seats sit = reservation.remove(client);
         if(sit != null){
             seatsAvailable.add(sit);
 
