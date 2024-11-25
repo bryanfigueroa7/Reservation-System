@@ -3,31 +3,44 @@ public class Client {
     private String email;
     private String phoneNumber;
 
-    public Client(String name, String email, String phoneNumber){
+    // Constructor
+    public Client(String name, String email, String phoneNumber) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
 
-    //Getter 
-    public String getName(){
+    // Getters
+    public String getName() {
         return this.name;
     }
-    public String getEmail(){
+
+    public String getEmail() {
         return this.email;
     }
-    public String getPhoneNumber(){
+
+    public String getPhoneNumber() {
         return this.phoneNumber;
     }
 
-    //Setter
-    public void setName(String name){
+    // Setters
+    public void setName(String name) {
         this.name = name;
     }
-    public void setEmail(String email){
+
+    public void setEmail(String email) {
         this.email = email;
     }
-    public void setPhoneNumber(String phoneNumber){
+
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Client Details:\n" +
+               "Name: " + this.name + "\n" +
+               "Email: " + this.email + "\n" +
+               "Phone: " + this.phoneNumber;
     }
 }
