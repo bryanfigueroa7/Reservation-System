@@ -28,7 +28,7 @@ public class Main {
             System.out.println("1. Field Level");
             System.out.println("2. Main Level");
             System.out.println("3. Grandstand Level");
-            System.out.print("Enter the number corresponding to your choice: ");
+            System.out.print("\nEnter the number corresponding to your choice: ");
             int levelChoice = scanner.nextInt();
             scanner.nextLine();
 
@@ -55,16 +55,15 @@ public class Main {
             int amount = 0;
 
             while (true) {
-                System.out.print("How many tickets from " + level + " would you like? ");
+                System.out.print("\nHow many tickets from " + level + " would you like? ");
                 amount = scanner.nextInt();
                 scanner.nextLine();
 
 
                 if (amount > availableTickets) {
-                    System.out.println("Cannot reserve " + amount + " tickets for " + level + ". Only "
+                    System.out.println("\nCannot reserve " + amount + " tickets for " + level + ". Only "
                             + availableTickets + " tickets are available.");
                     System.out.println("\nWhat would you like to do next? \n1) Try again with a different amount \n2) Add me to the waitlist \n3) Main Menu \nSelect between the options: ");
-                    scanner.nextLine(); // Clear newline
                     String response = scanner.nextLine().toLowerCase();
                     if (response.equals("1")) {
                         System.out.println("Try a different number.");
@@ -90,11 +89,13 @@ public class Main {
             }
 
             // Ask if they want tickets from an additional level
-            System.out.println("Would you like to purchase tickets from another level? (yes/no)");
-            scanner.nextLine(); // Clear
+            System.out.println("\nWould you like to purchase tickets from another level? (yes/no)");
             String continueResponse = scanner.nextLine().toLowerCase();
             if (!continueResponse.equals("yes")) {
                 continueShopping = false;
+            }
+            if(!continueResponse.equals("no")){
+                continueShopping = true; 
             }
         }
 
@@ -104,7 +105,8 @@ public class Main {
         System.out.println("Email: " + client.getEmail());
         System.out.println("Phone Number: " + client.getPhoneNumber());
         stadium.showReservations();
-        stadium.showAvailability();
+        stadium.showAvailability(); 
+        //Add Made Reservations 
         System.out.println("Total cost for " + client.getName() + ": $" + stadium.getTotalCostForClient(client));
         System.out.println("\nThank you for your purchase!");
         System.out.println("\n================= Ticket Details =================");
