@@ -71,7 +71,7 @@ public class Reservation {
                             System.out.println("Try a different number.");
                         }
                         else if (response.equals("2")) {
-                            stadium.addWaitlisted(client, level, amount);
+                            //stadium.addWaitlisted(client, level, amount);
                             break;
                         }
                         else if (response.equals("3")) {

@@ -47,7 +47,8 @@ public class Stadium {
             List<Seats> clientReservations = reservation.getOrDefault(client, new ArrayList<>());
             clientReservations.addAll(reservedSeats);
             reservation.put(client, clientReservations);
-    
+            
+            
             // Record transaction
             transactionHistory.add("Reserved " + amount + " tickets for " + client.getName());
             undoStack.push("Reservation: " + client.getName() + ", " + amount + " tickets");
