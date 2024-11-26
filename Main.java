@@ -30,6 +30,7 @@ public class Main {
             System.out.println("3. Grandstand Level");
             System.out.print("Enter the number corresponding to your choice: ");
             int levelChoice = scanner.nextInt();
+            scanner.nextLine();
 
             // Determining level
             String level = "";
@@ -56,22 +57,36 @@ public class Main {
             while (true) {
                 System.out.print("How many tickets from " + level + " would you like? ");
                 amount = scanner.nextInt();
+                scanner.nextLine();
+
 
                 if (amount > availableTickets) {
                     System.out.println("Cannot reserve " + amount + " tickets for " + level + ". Only "
                             + availableTickets + " tickets are available.");
-                    System.out.println("Would you like to try again with a different amount? (yes/no)");
+                    System.out.println("\nWhat would you like to do next? \n1) Try again with a different amount \n2) Add me to the waitlist \n3) Main Menu \nSelect between the options: ");
                     scanner.nextLine(); // Clear newline
                     String response = scanner.nextLine().toLowerCase();
-                    if (!response.equals("yes")) {
+                    if (response.equals("1")) {
+                        System.out.println("Try a different number.");
+                    }
+                    else if (response.equals("2")) {
+                        stadium.addWaitlisted(client, level, amount);
+                        break;
+                    }
+                    else if (response.equals("3")) {
                         System.out.println("Returning to level selection.");
                         break;
                     }
-                } else {
-                    // Reserve tickets
-                    stadium.reserveSeats(client, level, amount);
-                    break;
+                    else{
+                        System.out.println("Sorry, your input was invalid. Please try again.");
+                    }
                 }
+                else {
+                    // Reserve tickets 
+                        stadium.reserveSeats(client, level, amount);
+                    break;
+                    }
+                
             }
 
             // Ask if they want tickets from an additional level

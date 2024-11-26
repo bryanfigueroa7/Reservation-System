@@ -3,11 +3,13 @@ public class Client {
     private String email;
     private String phoneNumber;
 
+
     // Constructor
     public Client(String name, String email, String phoneNumber) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
+
     }
 
     // Getters
@@ -22,6 +24,7 @@ public class Client {
     public String getPhoneNumber() {
         return this.phoneNumber;
     }
+    
 
     // Setters
     public void setName(String name) {
@@ -35,6 +38,8 @@ public class Client {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+    
+    
 
     @Override
     public String toString() {
