@@ -16,7 +16,8 @@ public class Main {
             System.out.println("1. Finish for the day");
             System.out.println("2. New Client");
             System.out.println("3. Cancel Reservation");
-            System.out.print("Enter your choice (1, 2, or 3): ");
+            System.out.println("5. Undo last reservation or cancelation");
+            System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // consume the newline character
 
@@ -98,14 +99,16 @@ public class Main {
                     }
                     System.out.println("\n===================== Cancel Reservation ========================");
                     break;
-
+                case 5:
+                    System.out.println("\n===================== Undo Last Reservation or Cancellation ========================");
+                    stadium.undoLastAction(); // Calls the undo method in Stadium class
+                    System.out.println("\n===================== Undo Last Action ========================");
+                    break;
                 default:
                     System.out.println("Invalid choice. Please select 1, 2, or 3.");
                     break;
             }
         }
-        
-
         scanner.close();
     }
 }
