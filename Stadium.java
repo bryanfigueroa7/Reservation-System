@@ -247,6 +247,40 @@ public class Stadium {
         }
     }
 
+    public List<String> getTransactionHistory() {
+        return new ArrayList<>(transactionHistory);
+    }
+
+    public boolean cancelReservation(String email) {
+        Client clientToCancel = null;
+    
+        // Find the client with the matching email
+        for (Client client : reservation.keySet()) {
+            if (client.getEmail().equals(email)) {
+                clientToCancel = client;
+                break;
+            }
+        }
+    
+        if (clientToCancel != null) {
+            // Retrieve the reserved seats 
+            List<Seats> reservedSeats = reservation.get(clientToCancel);
+            if (reservedSeats != null) {
+                seatsAvailable.addAll(reservedSeats);
+            }
+    
+            // Remove the reservation and record the transaction
+            reservation.remove(clientToCancel);
+            transactionHistory.add("Cancelled reservation for " + clientToCancel.getName());
+            undoStack.push("Cancellation: " + clientToCancel.getName());
+    
+            return true;
+        }
+    
+        return false;
+    }
+    
+
     public void showAvailability() {
         System.out.println("\nSeat Availability by Level:");
         System.out.println("Field Level: " + getAvailableTicketsForLevel("Field Level") + " seats available");
