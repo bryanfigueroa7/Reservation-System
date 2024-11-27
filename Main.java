@@ -96,6 +96,7 @@ public class Main {
                     } else {
                         System.out.println("No reservation found for the provided email.");
                     }
+                    System.out.println("\n===================== Cancel Reservation ========================");
                     break;
 
                 default:
@@ -103,6 +104,7 @@ public class Main {
                     break;
             }
         }
+        
 
         scanner.close();
     }
