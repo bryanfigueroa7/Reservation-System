@@ -1,9 +1,19 @@
 import java.util.*;
 
 public class Main {
+    /**
+     * Method used to do several operations and obtain all the necessary information from the client. Such as their personal information, what level 
+     * they want to be in and how many seats they want. It also prints the final information like how many clients have reserved, 
+     * how many clients are in the waitlist, how many seats are available by level, the final total cost of the reserved seats 
+     * and the transation history.
+     * 
+     * @param scanner               Used to ask and receive user input and store in specific variables.
+     */
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Stadium stadium = new Stadium();
+        Reservation reservation = new Reservation();
 
         boolean programRunning = true;
 
@@ -16,9 +26,7 @@ public class Main {
             System.out.println("1. Finish for the day");
             System.out.println("2. New Client");
             System.out.println("3. Cancel Reservation");
-            System.out.println("4. See the wait list");
-            System.out.println("5. Undo last reservation or cancelation");
-            System.out.print("Enter your choice: ");
+            System.out.print("Enter your choice (1, 2, or 3): ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // consume the newline character
 
@@ -85,8 +93,8 @@ public class Main {
                     //System.out.println("Total cost for " + client.getName() + ": $" + stadium.getTotalCostForClient(client));
                     System.out.println("\nThank you for your purchase!");
                     System.out.println("\n======================== Ticket Details ==========================");
+                    
                     break;
-
                 case 3:
                     System.out.println("\n===================== Cancel Reservation ========================");
                     System.out.print("Enter email to cancel reservation: ");
@@ -98,24 +106,14 @@ public class Main {
                     } else {
                         System.out.println("No reservation found for the provided email.");
                     }
-                    System.out.println("\n===================== Cancel Reservation ========================");
-                    break;
-                case 4:
-                    System.out.println("\n========================= Wait List =============================");
-                    stadium.showWaitlisted();
-                    System.out.println("\n========================= Wait List =============================");
-                    break;
-                case 5:
-                    System.out.println("\n====================== Undo Last Action =========================");
-                    stadium.undoLastAction(); // Calls the undo method in Stadium class
-                    System.out.println("\n====================== Undo Last Action =========================");
                     break;
 
                 default:
-                    System.out.println("Invalid choice. Please select 1, 2, 3, 4, or 5.");
+                    System.out.println("Invalid choice. Please select 1, 2, or 3.");
                     break;
             }
         }
+
         scanner.close();
     }
 }

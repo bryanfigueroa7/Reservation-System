@@ -11,7 +11,22 @@ public class Stadium {
     private Queue<Client> grandstandlevelQ;
     private Map<Client, List<Seats>> waitlistedInfo;
 
-
+   /**
+     * Constructor for a new Stadium. This constructor initializes the different data structures used in the methods.
+     * It also calls the method that initializes the seats of each level: initializeSeats();
+     * 
+     * @param seatsAvailable           Hashset used to track the unique seats that are available in the level.
+     * @param reservation              HashMap used to store the Client and the seat or seats they reserved.
+     * @param transactionHistory       LinkedList used to save each transation done in the system to later print in chronological order.
+     * @param undoStack                Stack used to undo operations like reservations or cancellations
+     * @param fieldLevelQ              Queue used to store the clients that have been waitlisted by the specific level: Field Level
+     * @param mainLevelQ               Queue used to store the clients that have been waitlisted by the specific level: Main Level
+     * @param grandstandlevelQ         Queue used to store the clients that have been waitlisted by the specific level: Grandstand Level
+     * @param waitlistedInfo           HashMap used to store waitlisted clients and the seat or seats they wanted to reserve. 
+     * 
+     * 
+     * 
+     */
 
 
     public Stadium() {
@@ -26,12 +41,21 @@ public class Stadium {
         waitlistedInfo = new HashMap<>();
         initializeSeats();
     }
+    /**
+     * Method that initializes the seats for the specific levels by calling unto the addSeatsForLevel method with correct 
+     * information for each one like the level, starting row, capacity and cost.
+     */
 
     private void initializeSeats() {
         addSeatsForLevel("Field Level",  500, 300.0);
         addSeatsForLevel("Main Level",  1000, 120.0);
         addSeatsForLevel("Grandstand Level",  2000, 45.0);
     }
+    /**
+     * Method used to create seats to specific levels that can either be: Field, Main or Grandstand level while there is 
+     * capacity to add a seat in that level.
+     */
+
 
     private void addSeatsForLevel(String level,  int capacity, double cost) {
         for (int i = 1; i <= capacity; i++) {
@@ -39,6 +63,16 @@ public class Stadium {
             seatsAvailable.add(seat);
         }
     }
+
+     /**
+     * Method used to reserve a specific amount of seats for a client dpending on how much they wanted.
+     * If those seats are not available, then they are added to the waitlist HashMap and Queue depending on what level they
+     * wanted their seats.
+     * 
+     * @param reservedSeats     List used to store the seats wanted by the client.
+     * @param level             String that hold the level of the seat desired.
+     * @param amount            Integer that holds the amount of seats desired.
+     */
 
     public void reserveSeats(Client client, String level, int amount) {
         List<Seats> reservedSeats = new ArrayList<>();
@@ -103,7 +137,10 @@ public class Stadium {
         }
         return totalCost;
     }
-
+    /**
+     * Method that calculates the available tickets for reservation based on the specific level.
+     * @param level            String that hold the level of the seat desired.
+     */
     public int getAvailableTicketsForLevel(String level) {
         int count = 0;
         for (Seats seat : seatsAvailable) {
@@ -113,6 +150,17 @@ public class Stadium {
         }
         return count;
     }
+
+    /**
+     * Method used to upgrade the waitlisted clients to the newly available seats and then they are removed from the 
+     * waitlists. It checks if the amount of seats desired are available, if they are not then they are not upgraded until the 
+     * amount of seats wanted are available.
+     * 
+     * @param fieldLevelQ            Queue stores waitlisted clients that are in this specific level: Field level
+     * @param mainLevelQ             Queue stores waitlisted clients that are in this specific level: Main level
+     * @param grandstandlevelQ       Queue stores waitlisted clients that are in this specific level: Grandstand level
+     * @param waitlistedInfo         HashMap used to compare clients in Queues to find a match and access how many seats the client wanted.
+     */
 
     public void upgradeWaitlisted(String level, int amount, Queue<Client> fieldLevelQ,Queue<Client> mainLevelQ,Queue<Client> grandstandlevelQ, Map<Client, List<Seats>> waitlistedInfo, Set<Seats> seatsAvailable){
         int seatCounter = 0;
@@ -251,6 +299,10 @@ public class Stadium {
 
     }
 
+    /**
+     * Method that prints out every client who has reserved and how many seats they reserved.
+     */
+
     public void showReservations() {
         System.out.println("\nReservations:");
         for (Map.Entry<Client, List<Seats>> entry : reservation.entrySet()) {
@@ -263,13 +315,20 @@ public class Stadium {
         }
     }
 
+    /**
+     * Method that prints out all the seat availability based on the specific level. Call the method 
+     * getAvailableTicketsForLevel() to print the correct amount.
+     */
+
     public void showAvailability() {
         System.out.println("\nSeat Availability by Level:");
         System.out.println("Field Level: " + getAvailableTicketsForLevel("Field Level") + " seats available");
         System.out.println("Main Level: " + getAvailableTicketsForLevel("Main Level") + " seats available");
         System.out.println("Grandstand Level: " + getAvailableTicketsForLevel("Grandstand Level") + " seats available");
     }
-
+    /**
+     * Method that prints out every waitlisted client and how many seats they want to reserve.
+     */
     public void showWaitlisted() {
         System.out.println("\nWaitlisted:");
         for (Map.Entry<Client, List<Seats>> entry : waitlistedInfo.entrySet()) {
@@ -280,6 +339,13 @@ public class Stadium {
     public List<String> getTransactionHistory() {
         return new ArrayList<>(transactionHistory);
     }
+
+    /**
+     * Method to cancel a clients reservation using their email to identify them. Once the seat reservation is cancelled,
+     * the seat will become available for other clients to reserve.
+     * 
+     * @param email             User email is stored in this variable by user input.
+     */
     public boolean cancelReservation(String email) {
         Client clientToCancel = null;
     
