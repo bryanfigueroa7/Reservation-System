@@ -10,7 +10,7 @@ public class Main {
 
         System.out.println("=================================================================");
         System.out.println("============== Welcome to Wrigley Field Ticket Shop==============");
-        System.out.println("===================Home of the Chicago Cubs =====================");
+        System.out.println("=================== Home of the Chicago Cubs ====================");
         System.out.println("=================================================================");
         while (programRunning) {
             System.out.println("What would you like to do?");
@@ -29,7 +29,7 @@ public class Main {
                     break;
 
                 case 2:
-                    System.out.println("\n=== New Client ===");
+                    System.out.println("\n========================= New Client ===========================");
 
                     // Obtain client information
                     System.out.print("Enter your name: ");
@@ -112,7 +112,7 @@ public class Main {
                     }
 
                     // Tester
-                    System.out.println("\n================= Ticket Details =================");
+                    System.out.println("\n======================== Ticket Details ==========================");
                     System.out.println("\nName: " + client.getName());
                     System.out.println("Email: " + client.getEmail());
                     System.out.println("Phone Number: " + client.getPhoneNumber());
@@ -120,11 +120,11 @@ public class Main {
                     stadium.showAvailability();
                     System.out.println("Total cost for " + client.getName() + ": $" + stadium.getTotalCostForClient(client));
                     System.out.println("\nThank you for your purchase!");
-                    System.out.println("\n================= Ticket Details =================");
+                    System.out.println("\n======================== Ticket Details ==========================");
                     break;
 
                 case 3:
-                    System.out.println("\n================= Cancel Reservation =================");
+                    System.out.println("\n====================== Cancel Reservation ========================");
                     System.out.print("Enter the email of the client to cancel their reservation: ");
                     String cancelEmail = scanner.nextLine();
                     if (stadium.cancelReservation(cancelEmail)) {
