@@ -111,7 +111,7 @@ public class Reservation {
             stadium.showReservations();
             stadium.showAvailability(); 
             //Add Made Reservations 
-            System.out.println("Total cost for " + client.getName() + ": $" + stadium.getTotalCostForClient(client));
+            //System.out.println("Total cost for " + client.getName() + ": $" + stadium.getTotalCostForClient(client));
             System.out.println("\nThank you for your purchase!");
             System.out.println("\n================= Ticket Details =================");
             scanner.close();
