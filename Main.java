@@ -100,6 +100,10 @@ public class Main {
                     }
                     System.out.println("\n===================== Cancel Reservation ========================");
                     break;
+                case 4:
+                    System.out.println("\n========================= Wait List =============================");
+                    stadium.showWaitlisted();
+                    break;
                 case 5:
                     System.out.println("\n===================== Undo Last Reservation or Cancellation ========================");
                     stadium.undoLastAction(); // Calls the undo method in Stadium class
