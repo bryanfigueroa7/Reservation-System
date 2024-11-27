@@ -103,15 +103,16 @@ public class Main {
                 case 4:
                     System.out.println("\n========================= Wait List =============================");
                     stadium.showWaitlisted();
+                    System.out.println("\n========================= Wait List =============================");
                     break;
                 case 5:
-                    System.out.println("\n===================== Undo Last Reservation or Cancellation ========================");
+                    System.out.println("\n====================== Undo Last Action =========================");
                     stadium.undoLastAction(); // Calls the undo method in Stadium class
-                    System.out.println("\n===================== Undo Last Action ========================");
+                    System.out.println("\n====================== Undo Last Action =========================");
                     break;
 
                 default:
-                    System.out.println("Invalid choice. Please select 1, 2, or 3.");
+                    System.out.println("Invalid choice. Please select 1, 2, 3, 4, or 5.");
                     break;
             }
         }
