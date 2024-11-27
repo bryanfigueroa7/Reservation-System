@@ -1,9 +1,19 @@
-import java.util.Objects;
-
+import java.util.*;
+/**
+ * Represent a seat in the stadium.
+ */
 public class Seats {
-    private String section;  // Assumming the sections are the Levels
+    private String section;  // Level the seat is at
     private int seatNum;     // Seat number
     private double cost;     // Cost of the seat
+
+    /**
+     * Constructor  for a new Seat with the specified section, seat number and cost.
+     * 
+     * @param section           Section or level where the seat is located in the stadium/
+     * @param seatNumThe        Number of Seats
+     * @param cost              The cost of the seat 
+     */
 
     // Constructor
     public Seats(String section, int seatNum, double cost) {
@@ -45,6 +55,12 @@ public class Seats {
                "Seat Number: " + this.seatNum + "\n" +
                "Cost: $" + this.cost;
     }
+
+     /**
+     * Returns a string representation of the seat's details.
+     *
+     * @return a formatted string with the section, seat number, and cost
+     */
 
     // Equals and HashCode 
     @Override
