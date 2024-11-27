@@ -60,7 +60,7 @@ public class Stadium {
             reservation.put(client, clientReservations);
     
             // Record transaction
-            transactionHistory.add("Reserved " + amount + " tickets for " + client.getName());
+            transactionHistory.add("Reserved " + amount + "in the level " + level + " tickets for " + client.getName());
             undoStack.push("Reservation: " + client.getName() + ", " + amount + " tickets");
             
             System.out.println("Reservation successful for " + amount + " tickets at " + level + ".");
