@@ -42,6 +42,7 @@ public class Stadium {
 
     public void reserveSeats(Client client, String level, int amount) {
         List<Seats> reservedSeats = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
         
         // Collect seats for the specified level
         for (Seats seat : seatsAvailable) {
@@ -58,30 +59,37 @@ public class Stadium {
             List<Seats> clientReservations = reservation.getOrDefault(client, new ArrayList<>());
             clientReservations.addAll(reservedSeats);
             reservation.put(client, clientReservations);
-    
+        
             // Record transaction
             transactionHistory.add("Reserved " + amount + " tickets for " + client.getName());
             undoStack.push("Reservation: " + client.getName() + ", " + amount + " tickets");
-            
+        
             System.out.println("Reservation successful for " + amount + " tickets at " + level + ".");
         } else {
-            System.out.println("Not enough seats available in " + level + ". Adding client to the waitlist.");
-            List<Seats> waitlistedReservations = waitlistedInfo.getOrDefault(client, new ArrayList<>());
-            waitlistedReservations.addAll(reservedSeats);
-            waitlistedInfo.put(client, waitlistedReservations); 
-
-            if(level.equals("Field Level")){
-                fieldLevelQ.add(client);
-
+            System.out.println("Not enough seats available in " + level + ".");
+            System.out.print("Would you like to be added to the waiting list? (yes/no): ");
+            String response = scanner.nextLine().trim().toLowerCase();
+        
+            if (response.equals("yes")) {
+                // Add client to the waitlist
+                List<Seats> waitlistedReservations = waitlistedInfo.getOrDefault(client, new ArrayList<>());
+                waitlistedReservations.addAll(reservedSeats);
+                waitlistedInfo.put(client, waitlistedReservations);
+        
+                if (level.equals("Field Level")) {
+                    fieldLevelQ.add(client);
+                } else if (level.equals("Main Level")) {
+                    mainLevelQ.add(client);
+                } else if (level.equals("Grandstand Level")) {
+                    grandstandlevelQ.add(client);
+                }
+        
+                System.out.println("Client (" + client.getName() + ") was added to the waitlist for level: " + level + " for the amount of " + amount + " seat(s).");
+            } else {
+                System.out.println("Client (" + client.getName() + ") was not added to the waitlist.");
             }
-            else if(level.equals("Main Level")){
-                mainLevelQ.add(client);
-            }
-            else if(level.equals("Grandstand Level")){
-                grandstandlevelQ.add(client);
-            }
-            System.out.println("Client (" + client.getName() + ") was added to the waitlist for level: " + level + "for the amount of " + amount + " seat(s).");
         }
+        
     }
     
     public double getTotalCostForClient(Client client) {
@@ -260,7 +268,7 @@ public class Stadium {
     public void showWaitlisted() {
         System.out.println("\nWaitlisted:");
         for (Map.Entry<Client, List<Seats>> entry : waitlistedInfo.entrySet()) {
-            System.out.println(entry.getKey().getName() + ": " + entry.getValue() + " seat(s) waitlisted.");
+            System.out.println(entry.getKey().getName() + ": " + entry.getKey() + " seat(s) waitlisted.");
         }
     }
 
