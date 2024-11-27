@@ -8,6 +8,10 @@ public class Main {
 
         boolean programRunning = true;
 
+        System.out.println("=================================================================");
+        System.out.println("============== Welcome to Wrigley Field Ticket Shop==============");
+        System.out.println("===================Home of the Chicago Cubs =====================");
+        System.out.println("=================================================================");
         while (programRunning) {
             System.out.println("What would you like to do?");
             System.out.println("1. Finish for the day");
@@ -19,6 +23,7 @@ public class Main {
             switch (choice) {
                 case 1:
                     System.out.println("Thank you! Finishing for the day.");
+                    System.out.println(stadium.getTransactionHistory());
                     programRunning = false; // Exit loop
                     break;
 

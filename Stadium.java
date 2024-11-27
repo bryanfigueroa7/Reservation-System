@@ -16,6 +16,10 @@ public class Stadium {
         initializeSeats();
     }
 
+    public LinkedList<String> getTransactionHistory(){
+        return this.transactionHistory;
+    }
+
     private void initializeSeats() {
         addSeatsForLevel("Field Level", 1, 500, 300.0);
         addSeatsForLevel("Main Level", 1, 1000, 120.0);
@@ -48,7 +52,7 @@ public class Stadium {
             clientReservations.addAll(reservedSeats);
             reservation.put(client, clientReservations);
             
-            
+
             // Record transaction
             transactionHistory.add("Reserved " + amount + " tickets for " + client.getName());
             undoStack.push("Reservation: " + client.getName() + ", " + amount + " tickets");
