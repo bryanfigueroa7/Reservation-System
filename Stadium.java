@@ -54,28 +54,28 @@ public class Stadium {
         // Check if there's enough seats
         if (reservedSeats.size() == amount) {
             seatsAvailable.removeAll(reservedSeats);
-            
+    
             // Add reservations
             List<Seats> clientReservations = reservation.getOrDefault(client, new ArrayList<>());
             clientReservations.addAll(reservedSeats);
             reservation.put(client, clientReservations);
-        
+    
             // Record transaction
             transactionHistory.add("Reserved " + amount + " tickets for " + client.getName());
             undoStack.push("Reservation: " + client.getName() + ", " + amount + " tickets");
-        
+    
             System.out.println("Reservation successful for " + amount + " tickets at " + level + ".");
         } else {
             System.out.println("Not enough seats available in " + level + ".");
             System.out.print("Would you like to be added to the waiting list? (yes/no): ");
             String response = scanner.nextLine().trim().toLowerCase();
-        
+    
             if (response.equals("yes")) {
                 // Add client to the waitlist
                 List<Seats> waitlistedReservations = waitlistedInfo.getOrDefault(client, new ArrayList<>());
                 waitlistedReservations.addAll(reservedSeats);
                 waitlistedInfo.put(client, waitlistedReservations);
-        
+
                 if (level.equals("Field Level")) {
                     fieldLevelQ.add(client);
                 } else if (level.equals("Main Level")) {
@@ -83,13 +83,13 @@ public class Stadium {
                 } else if (level.equals("Grandstand Level")) {
                     grandstandlevelQ.add(client);
                 }
-        
+    
                 System.out.println("Client (" + client.getName() + ") was added to the waitlist for level: " + level + " for the amount of " + amount + " seat(s).");
             } else {
                 System.out.println("Client (" + client.getName() + ") was not added to the waitlist.");
             }
         }
-        
+
     }
     
     public double getTotalCostForClient(Client client) {
@@ -254,7 +254,12 @@ public class Stadium {
     public void showReservations() {
         System.out.println("\nReservations:");
         for (Map.Entry<Client, List<Seats>> entry : reservation.entrySet()) {
-            System.out.println(entry.getKey().getName() + ": " + entry.getValue() + " tickets reserved.");
+            int numSeatsReserved = entry.getValue().size();  
+            double totalCost = 0.0;
+            for (Seats seat : entry.getValue()) {
+                totalCost += seat.getCost();
+            }
+            System.out.println(entry.getKey().getName() + ": " + numSeatsReserved + " tickets reserved, Total Cost: $" + totalCost);
         }
     }
 
@@ -305,46 +310,56 @@ public class Stadium {
     }
 
     public void undoLastAction() {
-        if (!undoStack.isEmpty()) {
-            String lastAction = undoStack.pop();
-            System.out.println("Undoing last action: " + lastAction);
-    
-            // Check if last action was Reservation or Cancellation
-            if (lastAction.startsWith("Reservation")) {
-                String[] actionDetails = lastAction.split(":");
-                String clientName = actionDetails[1].split(",")[0].trim();
-                //int numTickets = Integer.parseInt(actionDetails[1].split(",")[1].split(" ")[0].trim());
-    
-                // Undo reservation
-                Client client = getClientByName(clientName);
-                if (client != null) {
-                    List<Seats> reservedSeats = reservation.get(client);
-                    if (reservedSeats != null) {
-                        seatsAvailable.addAll(reservedSeats); // Re-add seats to available pool
-                        reservation.remove(client);
-                        System.out.println("Reservation for " + clientName + " has been undone.");
-                    }
+    if (!undoStack.isEmpty()) {
+        String lastAction = undoStack.pop();
+        System.out.println("Undoing last action: " + lastAction);
+
+        // Check if last action was a reservation or cancellation
+        if (lastAction.startsWith("Reservation")) {
+            String[] actionDetails = lastAction.split(":");
+            String clientName = actionDetails[1].split(",")[0].trim();
+
+            // Undo reservation
+            Client client = getClientByName(clientName);
+            if (client != null) {
+                List<Seats> reservedSeats = reservation.get(client);
+                if (reservedSeats != null && !reservedSeats.isEmpty()) {
+                    seatsAvailable.addAll(reservedSeats); // Return seats to available pool
+                    reservation.remove(client);          // Remove reservation
+                    System.out.println("Reservation for " + clientName + " has been undone.");
+                } else {
+                    System.out.println("No reserved seats found for " + clientName + " to undo.");
                 }
-            } else if (lastAction.startsWith("Cancellation")) {
-                String[] actionDetails = lastAction.split(":");
-                String clientName = actionDetails[1].trim();
-    
-                // Undo cancellation
-                Client client = getClientByName(clientName);
-                if (client != null) {
-                    // Re-add the reserved seats back to the reservation
-                    List<Seats> waitlistedSeats = waitlistedInfo.get(client);
-                    if (waitlistedSeats != null) {
-                        reservation.put(client, waitlistedSeats);
-                        waitlistedInfo.remove(client);
-                        System.out.println("Cancellation for " + clientName + " has been undone.");
-                    }
+            } else {
+                System.out.println("Client not found for undoing reservation: " + clientName);
+            }
+
+        } else if (lastAction.startsWith("Cancellation")) {
+            String[] actionDetails = lastAction.split(":");
+            String clientName = actionDetails[1].trim();
+
+            // Undo cancellation
+            Client client = getClientByName(clientName);
+            if (client != null) {
+                List<Seats> previouslyReservedSeats = waitlistedInfo.get(client);
+                if (previouslyReservedSeats != null && !previouslyReservedSeats.isEmpty()) {
+                    seatsAvailable.removeAll(previouslyReservedSeats); // Re-reserve the seats
+                    reservation.put(client, previouslyReservedSeats); // Restore reservation
+                    waitlistedInfo.remove(client);                   // Remove from waitlisted info
+                    System.out.println("Cancellation for " + clientName + " has been undone.");
+                } else {
+                    System.out.println("No cancelled seats found for " + clientName + " to undo.");
                 }
+            } else {
+                System.out.println("Client not found for undoing cancellation: " + clientName);
             }
         } else {
-            System.out.println("No actions to undo.");
+            System.out.println("Unknown action type in undo stack: " + lastAction);
         }
+    } else {
+        System.out.println("No actions to undo.");
     }
+}
     
     private Client getClientByName(String name) {
         for (Client client : reservation.keySet()) {
