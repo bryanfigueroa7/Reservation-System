@@ -42,7 +42,7 @@ public class Stadium {
                 reservedSeats.add(seat);
             }
         }
-    
+        
         // Check if there's enough seats
         if (reservedSeats.size() == amount) {
             seatsAvailable.removeAll(reservedSeats);
@@ -51,8 +51,6 @@ public class Stadium {
             List<Seats> clientReservations = reservation.getOrDefault(client, new ArrayList<>());
             clientReservations.addAll(reservedSeats);
             reservation.put(client, clientReservations);
-            
-
             // Record transaction
             transactionHistory.add("Reserved " + amount + " tickets for " + client.getName());
             undoStack.push("Reservation: " + client.getName() + ", " + amount + " tickets");
@@ -63,7 +61,59 @@ public class Stadium {
             waitList.add(client);
         }
     }
-    
+
+    public boolean cancelReservation(String email) {
+        Client clientToCancel = null;
+
+        for (Client client : reservation.keySet()) {
+            if (client.getEmail().equals(email)) {
+                clientToCancel = client;
+                break;
+            }
+        }
+
+        if (clientToCancel == null) {
+            return false; // No matching client found
+        }
+
+        List<Seats> canceledSeats = reservation.remove(clientToCancel);
+        if (canceledSeats != null) {
+            seatsAvailable.addAll(canceledSeats);
+            processWaitlist(canceledSeats);
+
+            transactionHistory.add("Canceled reservation for " + clientToCancel.getName());
+            undoStack.push("Cancellation: " + clientToCancel.getName() + ", " + canceledSeats.size() + " tickets");
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private void processWaitlist(List<Seats> newlyAvailableSeats) {
+        Iterator<Client> waitlistIterator = waitList.iterator();
+
+        while (waitlistIterator.hasNext() && !newlyAvailableSeats.isEmpty()) {
+            Client waitlistedClient = waitlistIterator.next();
+            List<Seats> clientSeats = new ArrayList<>();
+
+            for (Iterator<Seats> seatIterator = newlyAvailableSeats.iterator(); seatIterator.hasNext(); ) {
+                Seats seat = seatIterator.next();
+                if (clientSeats.size() < 1) { // Adjust with waitlist
+                    clientSeats.add(seat);
+                    seatIterator.remove();
+                }
+            }
+
+            if (!clientSeats.isEmpty()) {
+                reservation.put(waitlistedClient, clientSeats);
+                waitlistIterator.remove();
+
+                System.out.println("Assigned " + clientSeats.size() + " seats to " + waitlistedClient.getName() + " from the waitlist.");
+            }
+        }
+    }
+
     public double getTotalCostForClient(Client client) {
         List<Seats> clientSeats = reservation.get(client);
         if (clientSeats == null || clientSeats.isEmpty()) {
@@ -94,9 +144,13 @@ public class Stadium {
     }
 
     public void showAvailability() {
-        System.out.println("\nSeat Availability by Level:");
-        System.out.println("Field Level: " + getAvailableTicketsForLevel("Field Level") + " seats available");
-        System.out.println("Main Level: " + getAvailableTicketsForLevel("Main Level") + " seats available");
-        System.out.println("Grandstand Level: " + getAvailableTicketsForLevel("Grandstand Level") + " seats available");
+        System.out.println("\nAvailable Tickets:");
+        Map<String, Integer> levels = new HashMap<>();
+        for (Seats seat : seatsAvailable) {
+            levels.put(seat.getSection(), levels.getOrDefault(seat.getSection(), 0) + 1);
+        }
+        for (Map.Entry<String, Integer> entry : levels.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue() + " tickets available.");
+        }
     }
 }

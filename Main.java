@@ -16,7 +16,8 @@ public class Main {
             System.out.println("What would you like to do?");
             System.out.println("1. Finish for the day");
             System.out.println("2. New Client");
-            System.out.print("Enter your choice (1 or 2): ");
+            System.out.println("3. Cancel Reservation");
+            System.out.print("Enter your choice (1, 2, or 3): ");
             int choice = scanner.nextInt();
             scanner.nextLine(); 
 
@@ -29,7 +30,7 @@ public class Main {
 
                 case 2:
                     System.out.println("\n=== New Client ===");
-                    
+
                     // Obtain client information
                     System.out.print("Enter your name: ");
                     String name = scanner.nextLine();
@@ -43,9 +44,6 @@ public class Main {
                     // Create Client
                     Client client = new Client(name, email, phoneNumber);
 
-                    // Initialize Stadium class
-                    // Stadium stadium = new Stadium();
-
                     boolean continueShopping = true;
 
                     while (continueShopping) {
@@ -56,7 +54,7 @@ public class Main {
                         System.out.println("3. Grandstand Level");
                         System.out.print("Enter the number corresponding to your choice: ");
                         int levelChoice = scanner.nextInt();
-                        scanner.nextLine(); // Consume leftover newline
+                        scanner.nextLine(); 
 
                         // Determining level
                         String level = "";
@@ -103,10 +101,13 @@ public class Main {
 
                         // Ask if they want tickets from an additional level
                         System.out.println("Would you like to purchase tickets from another level? (yes/no)");
-                        scanner.nextLine(); // Clear
+                        scanner.nextLine(); 
                         String continueResponse = scanner.nextLine().toLowerCase();
                         if (!continueResponse.equals("yes")) {
                             continueShopping = false;
+                        }
+                        if(!continueResponse.equals("no")){
+                            continueShopping = true;
                         }
                     }
 
@@ -122,8 +123,19 @@ public class Main {
                     System.out.println("\n================= Ticket Details =================");
                     break;
 
+                case 3:
+                    System.out.println("\n================= Cancel Reservation =================");
+                    System.out.print("Enter the email of the client to cancel their reservation: ");
+                    String cancelEmail = scanner.nextLine();
+                    if (stadium.cancelReservation(cancelEmail)) {
+                        System.out.println("Reservation successfully cancelled.");
+                    } else {
+                        System.out.println("No reservation found for the provided email.");
+                    }
+                    break;
+
                 default:
-                    System.out.println("Invalid choice. Please select 1 or 2.");
+                    System.out.println("Invalid choice. Please select 1, 2, or 3.");
                     break;
             }
         }
