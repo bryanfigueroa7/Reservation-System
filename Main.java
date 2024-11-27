@@ -16,6 +16,7 @@ public class Main {
             System.out.println("1. Finish for the day");
             System.out.println("2. New Client");
             System.out.println("3. Cancel Reservation");
+            System.out.println("4. See the wait list");
             System.out.print("Enter your choice (1, 2, or 3): ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // consume the newline character
@@ -96,6 +97,10 @@ public class Main {
                     } else {
                         System.out.println("No reservation found for the provided email.");
                     }
+                    break;
+                case 4:
+                    System.out.println("\n========================== Wait List =============================");
+                    stadium.showWaitlisted();
                     break;
 
                 default:
