@@ -13,7 +13,6 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Stadium stadium = new Stadium();
-        Reservation reservation = new Reservation();
 
         boolean programRunning = true;
 
@@ -26,7 +25,8 @@ public class Main {
             System.out.println("1. Finish for the day");
             System.out.println("2. New Client");
             System.out.println("3. Cancel Reservation");
-            System.out.print("Enter your choice (1, 2, or 3): ");
+            System.out.println("4. Undo last reservation or cancelation");
+            System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // consume the newline character
 
@@ -87,8 +87,8 @@ public class Main {
                     System.out.println("\nName: " + client.getName());
                     System.out.println("Email: " + client.getEmail());
                     System.out.println("Phone Number: " + client.getPhoneNumber());
-                    stadium.showReservations();
-                    stadium.showWaitlisted();
+                    //stadium.showReservations();
+                    //stadium.showWaitlisted();
                     stadium.showAvailability();
                     //System.out.println("Total cost for " + client.getName() + ": $" + stadium.getTotalCostForClient(client));
                     System.out.println("\nThank you for your purchase!");
@@ -106,14 +106,18 @@ public class Main {
                     } else {
                         System.out.println("No reservation found for the provided email.");
                     }
+                    System.out.println("\n===================== Cancel Reservation ========================");
                     break;
-
+                case 4:
+                    System.out.println("\n====================== Undo Last Action =========================");
+                    stadium.undoLastAction(); // Calls the undo method in Stadium class
+                    System.out.println("\n====================== Undo Last Action =========================");
+                    break;
                 default:
-                    System.out.println("Invalid choice. Please select 1, 2, or 3.");
+                    System.out.println("Invalid choice. Please select 1, 2, 3, 4, or 5.");
                     break;
             }
         }
-
         scanner.close();
     }
 }
