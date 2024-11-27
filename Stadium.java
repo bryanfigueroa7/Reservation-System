@@ -28,14 +28,14 @@ public class Stadium {
     }
 
     private void initializeSeats() {
-        addSeatsForLevel("Field Level", 1, 500, 300.0);
-        addSeatsForLevel("Main Level", 1, 1000, 120.0);
-        addSeatsForLevel("Grandstand Level", 1, 2000, 45.0);
+        addSeatsForLevel("Field Level",  500, 300.0);
+        addSeatsForLevel("Main Level",  1000, 120.0);
+        addSeatsForLevel("Grandstand Level",  2000, 45.0);
     }
 
-    private void addSeatsForLevel(String level, int startRow, int capacity, double cost) {
+    private void addSeatsForLevel(String level,  int capacity, double cost) {
         for (int i = 1; i <= capacity; i++) {
-            Seats seat = new Seats(level, startRow, i, cost);
+            Seats seat = new Seats(level,  i, cost);
             seatsAvailable.add(seat);
         }
     }
@@ -246,7 +246,7 @@ public class Stadium {
     public void showReservations() {
         System.out.println("\nReservations:");
         for (Map.Entry<Client, List<Seats>> entry : reservation.entrySet()) {
-            System.out.println(entry.getKey().getName() + ": " + entry.getValue().size() + " tickets reserved.");
+            System.out.println(entry.getKey().getName() + ": " + entry.getValue() + " tickets reserved.");
         }
     }
 
@@ -260,7 +260,7 @@ public class Stadium {
     public void showWaitlisted() {
         System.out.println("\nWaitlisted:");
         for (Map.Entry<Client, List<Seats>> entry : waitlistedInfo.entrySet()) {
-            System.out.println(entry.getKey().getName() + ": " + entry.getValue().size() + " seat(s) waitlisted.");
+            System.out.println(entry.getKey().getName() + ": " + entry.getValue() + " seat(s) waitlisted.");
         }
     }
 
