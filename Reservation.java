@@ -3,10 +3,7 @@ import java.util.*;
 
 
 public class Reservation {
-    private LinkedList <Map<Client, Seats>> transactionHistory;
-    public Reservation(){
-        transactionHistory = new LinkedList();
-    }
+
 
                // Obtains info from client
         public void reservation(){
