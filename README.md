@@ -8,9 +8,6 @@ In this class we store the information of the client we are attending at the mom
 The information it takes in is the clients name, their email and their phone number. We obtain this information through user input when we add a new client to our system.
 This class also has getter and setter methods for these variables so we can access and manipulate them with ease.
 
-Reservation
-The method reservation in this class only runs when a new client is added to our system. The method takes in all the necessary information to populate the Client class such as their name, email and phone number.
-
 Seats
 In this class we store all the information regarding individual seats in our stadium. Stored in this class is the section, row, seat number and cost of the individual seat. We also have getter and setter methods for these variables so we can access and manipulate them with ease.
 
